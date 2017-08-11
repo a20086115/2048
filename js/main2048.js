@@ -97,7 +97,7 @@ function moveLeft() {
 						board[i][j] = 0;
 
 						score += board[i][k];
-                        //updateScore( score );
+                        updateScore( score );
 
                         hasConflicted[i][k] = true;
 						//continue;
@@ -133,7 +133,7 @@ function moveRight() {
 						board[i][j] = 0;
 						//add score
 						score += board[i][k];
-						//updateScore(score);
+						updateScore(score);
 
 						hasConflicted[i][k] = true;
 						continue;
@@ -168,7 +168,7 @@ function moveUp() {
 						board[i][j] = 0;
 						//add score
 						score += board[k][j];
-						//updateScore(score);
+						updateScore(score);
 
 						hasConflicted[k][j] = true;
 						continue;
@@ -202,7 +202,7 @@ function moveDown() {
 						board[i][j] = 0;
 						//add score
 						score += board[k][j];
-						//updateScore(score);
+						updateScore(score);
 
 						hasConflicted[k][j] = true;
 						continue;
@@ -307,3 +307,7 @@ document.addEventListener('touchend', function(event) {
 		}
 	}
 });
+
+function updateScore(score){
+	$("#score").text(score);
+}
