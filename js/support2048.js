@@ -218,6 +218,7 @@ function isGameOver(){
 }
 
 function gameOver(){
+	alert("gane over");
     console.log("game over !");
 }
 

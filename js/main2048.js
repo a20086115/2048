@@ -7,10 +7,69 @@ var endx = 0;
 var endy = 0;
 
 $(function() {
+	
 	newGame();
+	
+	ele = document.getElementById("grid-container");
+
+	ele.addEventListener('touchstart', function(event) {
+		//event.preventDefault();
+		startx = event.touches[0].pageX;
+		starty = event.touches[0].pageY;
+	});
+	
+	ele.addEventListener('touchend', function(event) {
+		
+		//event.preventDefault();
+		
+		endx = event.changedTouches[0].pageX;
+		endy = event.changedTouches[0].pageY;
+	
+		var deltax = endx - startx;
+		var deltay = endy - starty;
+	
+		if(Math.abs(deltax) < 0.1 * documentWidth && Math.abs(deltay) < 0.1 * documentWidth)
+			return;
+	
+		if(Math.abs(deltax) >= Math.abs(deltay)) {
+	
+			if(deltax > 0) {
+				//move right
+				if(canMoveRight(board)) {
+					moveRight();
+					setTimeout("generateOneNumber()", 210);
+					setTimeout("isGameOver()", 300);
+				}
+			} else {
+				//move left
+				if(canMoveLeft(board)) {
+					moveLeft();
+					setTimeout("generateOneNumber()", 210);
+					setTimeout("isGameOver()", 300);
+				}
+			}
+		} else {
+			if(deltay > 0) {
+				//move down
+				if(canMoveDown(board)) {
+					moveDown();
+					setTimeout("generateOneNumber()", 210);
+					setTimeout("isGameOver()", 300);
+				}
+			} else {
+				//move up
+				if(canMoveUp(board)) {
+					moveUp();
+					setTimeout("generateOneNumber()", 210);
+					setTimeout("isGameOver()", 300);
+				}
+			}
+		}
+	});
 })
 
 function newGame() {
+	
 	//初始化棋盘格
 	init();
 
@@ -254,59 +313,6 @@ function updateBoardView() {
 	$('.number-cell').css('font-size', 0.6 * cellSideLength + 'px');
 }
 
-document.addEventListener('touchstart', function(event) {
-	event.preventDefault();
-	startx = event.touches[0].pageX;
-	starty = event.touches[0].pageY;
-});
-
-document.addEventListener('touchend', function(event) {
-	event.preventDefault();
-	
-	endx = event.changedTouches[0].pageX;
-	endy = event.changedTouches[0].pageY;
-
-	var deltax = endx - startx;
-	var deltay = endy - starty;
-
-	if(Math.abs(deltax) < 0.3 * documentWidth && Math.abs(deltay) < 0.3 * documentWidth)
-		return;
-
-	if(Math.abs(deltax) >= Math.abs(deltay)) {
-
-		if(deltax > 0) {
-			//move right
-			if(canMoveRight(board)) {
-				moveRight();
-				setTimeout("generateOneNumber()", 210);
-				setTimeout("isGameOver()", 300);
-			}
-		} else {
-			//move left
-			if(canMoveLeft(board)) {
-				moveLeft();
-				setTimeout("generateOneNumber()", 210);
-				setTimeout("isGameOver()", 300);
-			}
-		}
-	} else {
-		if(deltay > 0) {
-			//move down
-			if(canMoveDown(board)) {
-				moveDown();
-				setTimeout("generateOneNumber()", 210);
-				setTimeout("isGameOver()", 300);
-			}
-		} else {
-			//move up
-			if(canMoveUp(board)) {
-				moveUp();
-				setTimeout("generateOneNumber()", 210);
-				setTimeout("isGameOver()", 300);
-			}
-		}
-	}
-});
 
 function updateScore(score){
 	$("#score").text(score);
